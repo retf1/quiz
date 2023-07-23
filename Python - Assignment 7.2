@@ -1,0 +1,13 @@
+fname = input("File: ")
+fn = open(fname)
+count = 0
+total = 0
+for line in fn:
+    if not line.startswith("X-DSPAM-Confidence:") : continue
+    a = line.find("0")
+    number= float(line[a:])
+    count = count + 1
+    total = total + number
+
+average = total/count
+print ("Average spam confidence:",average)
