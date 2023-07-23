@@ -1,0 +1,40 @@
+# Assign 9.4
+
+def find_maxsender(filename):
+    # Read the mbox-short.txt file
+    try:
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+        return
+
+    sender_count = {}  # make dictionary to count senders
+    for line in lines:
+        if line.startswith('From '):
+            words = line.split()
+            sender = words[1]  # after "From" is sender
+            sender_count[sender] = sender_count.get(sender, 0) + 1
+
+    
+    maxsender = None    # Find the most prolific sender
+    max_count = 0
+    for sender, count in sender_count.items():
+        if count > max_count:
+            maxsender = sender
+            max_count = count
+
+    return maxsender, max_count
+
+if __name__ == "__main__":
+    filename = "mbox-short.txt"  # Replace this with the path to mbox-short.txt file
+
+    maxsender, max_count = find_maxsender(filename)
+
+    if maxsender:
+        print(f"The most prolific Sender is '{maxsender}' with {max_count} mail messages.")
+    else:
+        print("No 'From ' lines found in the file.")
+
+
+
